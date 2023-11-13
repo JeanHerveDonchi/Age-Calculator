@@ -39,13 +39,14 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
         while (checker == true)
         {
             TimeSpan timeUntilAnniversaryTemp = nextAnniversary - DateTime.Now;
-            Console.Clear();
+
+            //Console.Clear();
             Console.WriteLine(
                 $"You have: " +
                 $"{timeUntilAnniversaryTemp.Days} days, " +
                 $"{timeUntilAnniversaryTemp.Hours} hours, " +
                 $"{timeUntilAnniversaryTemp.Minutes} minutes, " +
-                $"{timeUntilAnniversaryTemp.Seconds} seconds  " +
+                $"{timeUntilAnniversaryTemp.Seconds} seconds " +
                 $"Until your next anniversary"
                 );
             Thread.Sleep(1000);
@@ -59,7 +60,8 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
         {
             int lifeExpectancy = age + yearsRemaining;
             DateTime dateOfDeath = GenerateRandomDate(lifeExpectancy);
-            DisplayDeathInfo(dateOfDeath, lifeExpectancy);
+            int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
+            DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
         }
         else
         {
@@ -67,7 +69,8 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
             if (monthsRemaining > 0)
             {
                 DateTime dateOfDeath = DateTime.Now.AddMonths(monthsRemaining);
-                DisplayDeathInfo(dateOfDeath, age);
+                int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
+                DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
             }
             else
             {
@@ -75,7 +78,8 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
                 if (daysRemaining > 0)
                 {
                     DateTime dateOfDeath = DateTime.Now.AddDays(daysRemaining);
-                    DisplayDeathInfo(dateOfDeath, age);
+                    int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
+                    DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
                 }
                 else
                 {
@@ -83,14 +87,24 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
                     if (hoursRemaining > 0)
                     {
                         DateTime dateOfDeath = DateTime.Now.AddHours(hoursRemaining);
-                        DisplayDeathInfo(dateOfDeath, age);
+                        int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
+                        DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
                     }
-                    else{
+                    else
+                    {
                         int minutesRemaining = random.Next(60);
                         if (minutesRemaining > 0)
                         {
                             DateTime dateOfDeath = DateTime.Now.AddMinutes(minutesRemaining);
-                            DisplayDeathInfo(dateOfDeath, age);
+                            int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
+                            DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
+                        }
+                        else
+                        {
+                            int secondsRemaining = random.Next(40, 60);
+                            DateTime dateOfDeath = DateTime.Now.AddSeconds(secondsRemaining);
+                            int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
+                            DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
                         }
                     }
                 }
@@ -128,24 +142,36 @@ static int CalculateAge(DateTime birthDate)
     return age;
 }
 
-static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
+static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath, int currentAge)
 {
     bool checker = true;
-    Console.WriteLine($"You will die at the age of: {ageOfDeath} " +
-                                    $"You will die on: {dateOfDeath}"
+    Console.WriteLine($"You will die at the age of: {ageOfDeath} \n\r" +
+                                    $"Date of death: {dateOfDeath}"
                                     );
     while (checker == true)
     {
         TimeSpan timeUntilDeath = dateOfDeath - DateTime.Now;
-        Console.Clear();
+        //Console.Clear();
+        int years = ageOfDeath - currentAge;
+
+        int year = timeUntilDeath.Days/365;
+        int months = (timeUntilDeath.Days/30) - (year * 12);
+        int days = timeUntilDeath.Days - (year * 365);
+        int hours = timeUntilDeath.Hours;
+        int minutes = timeUntilDeath.Minutes;
+        int seconds = dateOfDeath.Second;
+
         Console.WriteLine(
             $"You have " +
-            $"{timeUntilDeath.Days} days, " +
-            $"{timeUntilDeath.Hours} hours, " +
-            $"{timeUntilDeath.Minutes} minutes, " +
-            $"{timeUntilDeath.Seconds} seconds " +
+            $"{years} years, " +
+            $"{months} months, " +
+            $"{days} days, " +
+            $"{hours} hours, " +
+            $"{minutes} minutes, " +
+            $"{seconds} seconds " +
             $"Left to Die !!!");
         Thread.Sleep(1000);
+        checker = false;
     }
 
 }
