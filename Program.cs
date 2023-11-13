@@ -56,12 +56,22 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
         //generate random number of remaining years to leave, and Use helper method to generate Random date of death
         Random random = new Random();
         int yearsRemaining = random.Next(90);
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        //Still brainstorming on this logic to make the app more scarier.. may add some other logics..
+        bool mood = false;
+        if (mood)
+        {
+            yearsRemaining = 0;
+        }
+
+
         if (yearsRemaining > 0)
         {
             int lifeExpectancy = age + yearsRemaining;
             DateTime dateOfDeath = GenerateRandomDate(lifeExpectancy);
-            int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
-            DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
+            int ageOfDeath = dateOfDeath.Year - birthDate.Year;
+            DisplayDeathInfo(dateOfDeath, ageOfDeath);
         }
         else
         {
@@ -69,8 +79,7 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
             if (monthsRemaining > 0)
             {
                 DateTime dateOfDeath = DateTime.Now.AddMonths(monthsRemaining);
-                int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
-                DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
+                DisplayDeathInfo(dateOfDeath, age);
             }
             else
             {
@@ -78,8 +87,7 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
                 if (daysRemaining > 0)
                 {
                     DateTime dateOfDeath = DateTime.Now.AddDays(daysRemaining);
-                    int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
-                    DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
+                    DisplayDeathInfo(dateOfDeath, age);
                 }
                 else
                 {
@@ -87,8 +95,7 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
                     if (hoursRemaining > 0)
                     {
                         DateTime dateOfDeath = DateTime.Now.AddHours(hoursRemaining);
-                        int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
-                        DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
+                        DisplayDeathInfo(dateOfDeath, age);
                     }
                     else
                     {
@@ -96,15 +103,13 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
                         if (minutesRemaining > 0)
                         {
                             DateTime dateOfDeath = DateTime.Now.AddMinutes(minutesRemaining);
-                            int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
-                            DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
+                            DisplayDeathInfo(dateOfDeath, age);
                         }
                         else
                         {
                             int secondsRemaining = random.Next(40, 60);
                             DateTime dateOfDeath = DateTime.Now.AddSeconds(secondsRemaining);
-                            int ageOfDeath = dateOfDeath.Year - DateTime.Now.Year;
-                            DisplayDeathInfo(dateOfDeath, ageOfDeath, age);
+                            DisplayDeathInfo(dateOfDeath, age);
                         }
                     }
                 }
@@ -142,7 +147,7 @@ static int CalculateAge(DateTime birthDate)
     return age;
 }
 
-static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath, int currentAge)
+static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
 {
     bool checker = true;
     Console.WriteLine($"You will die at the age of: {ageOfDeath} \n\r" +
@@ -152,18 +157,19 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath, int currentAg
     {
         TimeSpan timeUntilDeath = dateOfDeath - DateTime.Now;
         //Console.Clear();
-        int years = ageOfDeath - currentAge;
 
-        int year = timeUntilDeath.Days/365;
-        int months = (timeUntilDeath.Days/30) - (year * 12);
-        int days = timeUntilDeath.Days - (year * 365);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  Have to modify this to have currect data, cant assume 365 months and 31 days (may use getters and setters)
+        int year = timeUntilDeath.Days / 365;
+        int months = (timeUntilDeath.Days - (year * 365)) / 31;
+        int days = timeUntilDeath.Days - (year * 365) - (months * 31);
         int hours = timeUntilDeath.Hours;
         int minutes = timeUntilDeath.Minutes;
         int seconds = dateOfDeath.Second;
 
         Console.WriteLine(
             $"You have " +
-            $"{years} years, " +
+            $"{year} years, " +
             $"{months} months, " +
             $"{days} days, " +
             $"{hours} hours, " +
