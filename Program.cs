@@ -15,7 +15,7 @@ Console.Write("Enter your birthdate (yyyy-MM-dd): ");
 if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
 {
     bool checker = true;
-    // Check if the birthdate is in the future
+    // Check if the birthdate is valid
     if (birthDate > DateTime.Now)
     {
         Console.WriteLine("Invalid birthdate. Please enter a valid date in the past.");
@@ -35,19 +35,66 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
         }
         Thread.Sleep(2000);
 
+        //Show time until next anniversary
         while (checker == true)
         {
             TimeSpan timeUntilAnniversaryTemp = nextAnniversary - DateTime.Now;
             Console.Clear();
             Console.WriteLine(
-                $"Time until your next anniversary: " +
+                $"You have: " +
                 $"{timeUntilAnniversaryTemp.Days} days, " +
                 $"{timeUntilAnniversaryTemp.Hours} hours, " +
                 $"{timeUntilAnniversaryTemp.Minutes} minutes, " +
-                $"{timeUntilAnniversaryTemp.Seconds} seconds"
+                $"{timeUntilAnniversaryTemp.Seconds} seconds  " +
+                $"Until your next anniversary"
                 );
             Thread.Sleep(1000);
             checker = false;
+        }
+
+        //generate random number of remaining years to leave, and Use helper method to generate Random date of death
+        Random random = new Random();
+        int yearsRemaining = random.Next(90);
+        if (yearsRemaining > 0)
+        {
+            int lifeExpectancy = age + yearsRemaining;
+            DateTime dateOfDeath = GenerateRandomDate(lifeExpectancy);
+            DisplayDeathInfo(dateOfDeath, lifeExpectancy);
+        }
+        else
+        {
+            int monthsRemaining = random.Next(12);
+            if (monthsRemaining > 0)
+            {
+                DateTime dateOfDeath = DateTime.Now.AddMonths(monthsRemaining);
+                DisplayDeathInfo(dateOfDeath, age);
+            }
+            else
+            {
+                int daysRemaining = random.Next(31);
+                if (daysRemaining > 0)
+                {
+                    DateTime dateOfDeath = DateTime.Now.AddDays(daysRemaining);
+                    DisplayDeathInfo(dateOfDeath, age);
+                }
+                else
+                {
+                    int hoursRemaining = random.Next(23);
+                    if (hoursRemaining > 0)
+                    {
+                        DateTime dateOfDeath = DateTime.Now.AddHours(hoursRemaining);
+                        DisplayDeathInfo(dateOfDeath, age);
+                    }
+                    else{
+                        int minutesRemaining = random.Next(60);
+                        if (minutesRemaining > 0)
+                        {
+                            DateTime dateOfDeath = DateTime.Now.AddMinutes(minutesRemaining);
+                            DisplayDeathInfo(dateOfDeath, age);
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -81,6 +128,24 @@ static int CalculateAge(DateTime birthDate)
     return age;
 }
 
+static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
+{
+    bool checker = true;
+    Console.WriteLine($"You will die at the age of: {ageOfDeath} " +
+                                    $"You will die on: {dateOfDeath}"
+                                    );
+    while (checker == true)
+    {
+        TimeSpan timeUntilDeath = dateOfDeath - DateTime.Now;
+        Console.Clear();
+        Console.WriteLine(
+            $"You have " +
+            $"{timeUntilDeath.Days} days, " +
+            $"{timeUntilDeath.Hours} hours, " +
+            $"{timeUntilDeath.Minutes} minutes, " +
+            $"{timeUntilDeath.Seconds} seconds " +
+            $"Left to Die !!!");
+        Thread.Sleep(1000);
+    }
 
-
-
+}
