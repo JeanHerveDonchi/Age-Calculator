@@ -12,3 +12,6 @@ C:\src\Learning\Age_Calculator\obj\Debug\net7.0\refint\Age_Calculator.dll
 C:\src\Learning\Age_Calculator\obj\Debug\net7.0\Age_Calculator.pdb
 C:\src\Learning\Age_Calculator\obj\Debug\net7.0\Age_Calculator.genruntimeconfig.cache
 C:\src\Learning\Age_Calculator\obj\Debug\net7.0\ref\Age_Calculator.dll
+C:\src\Learning\Age_Calculator\bin\Debug\net7.0\NodaTime.dll
+C:\src\Learning\Age_Calculator\obj\Debug\net7.0\Age_Calculator.csproj.AssemblyReference.cache
+C:\src\Learning\Age_Calculator\obj\Debug\net7.0\Age_Calculator.csproj.CopyComplete

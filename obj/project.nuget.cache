@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "uqnmnXDTzReyaOFXut8S1OZ8eZZ2LpWIVYV0mUPHBdBgdffwtIXjuDIKSlQDGlpGvtHgjcUxcsp+fVNua+ti/Q==",
+  "dgSpecHash": "3simXFFT6awbM973uL0q/beYzdUeTW+FG8YlgL7v/nrxIcOniTrQXo2dT8hDtvxARcSGa1tEbTqdDeXspyRtFw==",
   "success": true,
   "projectFilePath": "C:\\src\\Learning\\Age_Calculator\\Age_Calculator.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\User1\\.nuget\\packages\\nodatime\\3.1.9\\nodatime.3.1.9.nupkg.sha512",
+    "C:\\Users\\User1\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.1\\system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
+  ],
   "logs": []
 }

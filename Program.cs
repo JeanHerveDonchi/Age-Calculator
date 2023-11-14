@@ -1,13 +1,12 @@
 ﻿
 using System;
+using NodaTime;
 
 /*Code snippet to calculate user age and display
     things left
     -while and do while loops in case of any invalid data
     -Catch exceptions and handle
     -Testing and Debbuging
-    -Rearrange user input to ask year, month and day separately
-    -Check if counter can be displayed on console.
 */
 
 //Get the user's birthdate as input
@@ -40,7 +39,7 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
         {
             TimeSpan timeUntilAnniversaryTemp = nextAnniversary - DateTime.Now;
 
-            //Console.Clear();
+            //Console.Clear(); (to redisplay Counter)
             Console.WriteLine(
                 $"You have: " +
                 $"{timeUntilAnniversaryTemp.Days} days, " +
@@ -56,10 +55,10 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
         //generate random number of remaining years to leave, and Use helper method to generate Random date of death
         Random random = new Random();
         int yearsRemaining = random.Next(90);
-        
+
         //////////////////////////////////////////////////////////////////////////////////////////////
         //Still brainstorming on this logic to make the app more scarier.. may add some other logics..
-        bool mood = false;
+        bool mood = true;
         if (mood)
         {
             yearsRemaining = 0;
@@ -155,21 +154,23 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
                                     );
     while (checker == true)
     {
-        TimeSpan timeUntilDeath = dateOfDeath - DateTime.Now;
-        //Console.Clear();
+        // //Console.Clear(); (to redisplay Counter)
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-        //  Have to modify this to have currect data, cant assume 365 months and 31 days (may use getters and setters)
-        int year = timeUntilDeath.Days / 365;
-        int months = (timeUntilDeath.Days - (year * 365)) / 31;
-        int days = timeUntilDeath.Days - (year * 365) - (months * 31);
-        int hours = timeUntilDeath.Hours;
-        int minutes = timeUntilDeath.Minutes;
-        int seconds = dateOfDeath.Second;
+        DateTime actualDateN = DateTime.Now;
+        LocalDate actualDate = LocalDate.FromDateTime(actualDateN);
+        LocalDate deathDate = LocalDate.FromDateTime(dateOfDeath);
+
+        int[] timeDifference = CompareDates(actualDate, deathDate, actualDateN, dateOfDeath);
+        int years = timeDifference[0];
+        int months = timeDifference[1];
+        int days = timeDifference[2];
+        int hours = timeDifference[3];
+        int minutes = timeDifference[4];
+        int seconds = timeDifference[5];
 
         Console.WriteLine(
             $"You have " +
-            $"{year} years, " +
+            $"{years} years, " +
             $"{months} months, " +
             $"{days} days, " +
             $"{hours} hours, " +
@@ -181,3 +182,28 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
     }
 
 }
+
+
+static int[] CompareDates(LocalDate startDate, LocalDate endDate, DateTime startDateTime, DateTime endDateTime)
+{
+    // LocalDate startDate = new LocalDate(2020, 1, 1);
+    // LocalDate endDate = new LocalDate(2023, 11, 14);
+
+    // Calculate the period between two dates
+    Period period = Period.Between(startDate, endDate);
+
+    // Extract years and months from the period
+    int years = period.Years;
+    int months = period.Months;
+    int days = period.Days; 
+
+    TimeSpan timeDifference = endDateTime - startDateTime;
+
+    int hours = timeDifference.Hours; // Approximate value of remaining days;
+    int minutes = timeDifference.Minutes;
+    int seconds = endDateTime.Second;
+
+    return new int[] {years,months,days,hours,minutes,seconds};
+}
+
+
