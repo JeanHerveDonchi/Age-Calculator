@@ -181,15 +181,11 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
         Thread.Sleep(1000);
         checker = false;
     }
-
 }
 
 
 static int[] CompareDates(LocalDateTime startDate, LocalDateTime endDate)
 {
-    // LocalDate startDate = new LocalDate(2020, 1, 1);
-    // LocalDate endDate = new LocalDate(2023, 11, 14);
-
     // Calculate the period between two dates
     Period period = Period.Between(startDate, endDate);
 
