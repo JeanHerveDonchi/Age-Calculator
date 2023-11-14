@@ -1,6 +1,7 @@
 ﻿
 using System;
 using NodaTime;
+using NodaTime.Text;
 
 /*Code snippet to calculate user age and display
     things left
@@ -58,7 +59,7 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
 
         //////////////////////////////////////////////////////////////////////////////////////////////
         //Still brainstorming on this logic to make the app more scarier.. may add some other logics..
-        bool mood = true;
+        bool mood = false;
         if (mood)
         {
             yearsRemaining = 0;
@@ -157,10 +158,10 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
         // //Console.Clear(); (to redisplay Counter)
 
         DateTime actualDateN = DateTime.Now;
-        LocalDate actualDate = LocalDate.FromDateTime(actualDateN);
-        LocalDate deathDate = LocalDate.FromDateTime(dateOfDeath);
+        LocalDateTime actualDate = LocalDateTime.FromDateTime(actualDateN);
+        LocalDateTime deathDate = LocalDateTime.FromDateTime(dateOfDeath);
 
-        int[] timeDifference = CompareDates(actualDate, deathDate, actualDateN, dateOfDeath);
+        int[] timeDifference = CompareDates(actualDate, deathDate);
         int years = timeDifference[0];
         int months = timeDifference[1];
         int days = timeDifference[2];
@@ -184,7 +185,7 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
 }
 
 
-static int[] CompareDates(LocalDate startDate, LocalDate endDate, DateTime startDateTime, DateTime endDateTime)
+static int[] CompareDates(LocalDateTime startDate, LocalDateTime endDate)
 {
     // LocalDate startDate = new LocalDate(2020, 1, 1);
     // LocalDate endDate = new LocalDate(2023, 11, 14);
@@ -196,12 +197,9 @@ static int[] CompareDates(LocalDate startDate, LocalDate endDate, DateTime start
     int years = period.Years;
     int months = period.Months;
     int days = period.Days; 
-
-    TimeSpan timeDifference = endDateTime - startDateTime;
-
-    int hours = timeDifference.Hours; // Approximate value of remaining days;
-    int minutes = timeDifference.Minutes;
-    int seconds = endDateTime.Second;
+    int hours = Convert.ToInt32(period.Hours); // Approximate value of remaining days;
+    int minutes = Convert.ToInt32(period.Minutes);
+    int seconds = Convert.ToInt32(period.Seconds);
 
     return new int[] {years,months,days,hours,minutes,seconds};
 }
