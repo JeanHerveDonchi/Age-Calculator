@@ -36,7 +36,7 @@ if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
         Thread.Sleep(2000);
 
         //Show time until next anniversary
-        while (checker == true)
+        while (checker)
         {
             TimeSpan timeUntilAnniversaryTemp = nextAnniversary - DateTime.Now;
 
@@ -153,10 +153,6 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
     Console.WriteLine($"You will die at the age of: {ageOfDeath} \n\r" +
                                     $"Date of death: {dateOfDeath}"
                                     );
-    while (checker == true)
-    {
-        // //Console.Clear(); (to redisplay Counter)
-
         DateTime actualDateN = DateTime.Now;
         LocalDateTime actualDate = LocalDateTime.FromDateTime(actualDateN);
         LocalDateTime deathDate = LocalDateTime.FromDateTime(dateOfDeath);
@@ -168,7 +164,9 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
         int hours = timeDifference[3];
         int minutes = timeDifference[4];
         int seconds = timeDifference[5];
-
+    while (checker)
+    {
+        // //Console.Clear(); (to redisplay Counter)
         Console.WriteLine(
             $"You have " +
             $"{years} years, " +
@@ -178,7 +176,7 @@ static void DisplayDeathInfo(DateTime dateOfDeath, int ageOfDeath)
             $"{minutes} minutes, " +
             $"{seconds} seconds " +
             $"Left to Die !!!");
-        Thread.Sleep(1000);
+        Console.ReadKey();  
         checker = false;
     }
 }
